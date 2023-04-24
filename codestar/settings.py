@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
+    # Add summernote wysiwyg editor, before our user created apps
+    # Docs: https://github.com/summernote/django-summernote
+    'django_summernote',
     'blog',
 ]
 
