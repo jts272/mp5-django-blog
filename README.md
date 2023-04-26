@@ -1,4 +1,5 @@
 # mp5-django-blog
+
 A walkthrough project for a blog, built using Django. GitHub features are used to document Agile methodologies.
 
 ## Design thinking
@@ -18,3 +19,9 @@ A walkthrough project for a blog, built using Django. GitHub features are used t
 "How do I develop a blog application that provides all this functionality to a user?"
 
 We use this statement to populate our user stories.
+
+## New view checklist
+
+1. Create view code
+2. Create template to render the view
+3. Connect up URLs
