@@ -21,5 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('summernote/', include('django_summernote.urls')),
     # Paths specified in the blog app's urls.py
-    path('', include('blog.urls'), name='blog.urls')
+    path('', include('blog.urls'), name='blog.urls'),
+    # Add pip3 installed allauth urls
+    path('accounts/', include('allauth.urls'))
 ]
