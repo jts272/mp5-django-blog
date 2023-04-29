@@ -55,3 +55,12 @@ Sources:
 
 - <https://youtu.be/9bFzeSlxPbs>
 - <https://docs.djangoproject.com/en/3.2/topics/http/urls/#how-django-processes-a-request>
+
+## Modifying allauth templates
+
+We copy the templates from the `allauth` installation to our root `templates`
+dir:
+
+```py
+cp -r .venv/lib/python3.8/site-packages/allauth/templates/* ./templates
+```
