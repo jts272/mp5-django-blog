@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # Add summernote wysiwyg editor, before our user created apps
     # Docs: https://github.com/summernote/django-summernote
     'django_summernote',
+    'crispy_forms',
     'blog',
 ]
 
@@ -62,6 +63,9 @@ SITE_ID = 1
 # Redirect here after auth
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Tell crispy-forms to use Bootstrap
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

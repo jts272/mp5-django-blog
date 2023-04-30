@@ -1,5 +1,8 @@
 {% extends 'base.html' %} {% block content %}
 
+<!-- Load the crispy form inside the content block -->
+{% load crispy_forms_tags %}
+
 <div class="masthead">
   <div class="container">
     <div class="row g-0">
@@ -12,9 +15,7 @@
       <div class="d-none d-md-block col-md-6 masthead-image">
         <!-- The featured image URL goes in the src attribute -->
         {% if "placeholder" in post.featured_image.url %}
-        <img
-          src="https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg"
-          width="100%" />
+        <img src="https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg" width="100%" />
         {% else %}
         <img src=" {{ post.featured_image.url }} " width="100%" />
         {% endif %}
@@ -33,14 +34,12 @@
         <div class="row">
           <div class="col-1">
             <!-- The number of likes goes before the closing strong tag -->
-            <strong class="text-secondary"
-              ><i class="far fa-heart"></i>{{ post.number_of_likes }}
+            <strong class="text-secondary"><i class="far fa-heart"></i>{{ post.number_of_likes }}
             </strong>
           </div>
           <div class="col-1">
             {% with comments.count as total_comments %}
-            <strong class="text-secondary"
-              ><i class="far fa-comments"></i>{{ total_comments }}
+            <strong class="text-secondary"><i class="far fa-comments"></i>{{ total_comments }}
               <!-- Our total_comments variable goes before the closing strong tag -->
             </strong>
             {% endwith %}
@@ -79,7 +78,19 @@
     </div>
     <div class="col-md-4 card mb-4 mt-3">
       <div class="card-body">
-        <!-- For later -->
+        <!-- crispy form -->
+        {% if user.is_authenticated %}
+
+        <h3>Leave a comment:</h3>
+        <p>Posting as: {{ user.username }}</p>
+        <form method="post" style="margin-top: 1.3em;">
+          <!-- From PostDetail CBV -->
+          {{ comment_form | crispy }}
+          {% csrf_token %}
+          <button type="submit" class="btn btn-signup btn-lg">Submit</button>
+        </form>
+
+        {% endif %}
       </div>
     </div>
   </div>
