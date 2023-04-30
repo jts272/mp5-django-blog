@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %}
+{% extends "base.html" %} {% block content %}
 
 <!-- Load the crispy form inside the content block -->
 {% load crispy_forms_tags %}
@@ -79,6 +79,14 @@
     <div class="col-md-4 card mb-4 mt-3">
       <div class="card-body">
         <!-- crispy form -->
+
+        <!-- If commented, don't show the comment form when pending approval -->
+        {% if commented %}
+        <div class="alert alert-success" role="alert">
+          Your comment is awaiting approval
+        </div>
+        {% else %}
+
         {% if user.is_authenticated %}
 
         <h3>Leave a comment:</h3>
@@ -90,6 +98,7 @@
           <button type="submit" class="btn btn-signup btn-lg">Submit</button>
         </form>
 
+        {% endif %}
         {% endif %}
       </div>
     </div>

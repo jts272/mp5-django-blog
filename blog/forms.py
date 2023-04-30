@@ -6,6 +6,6 @@ class CommentForm(forms.ModelForm):
     class Meta:
         # Tell the comment form which model to use and which fields we
         # want displayed on our form
-        # Trailing comma denontes a tuple
+        # Trailing comma denotes a tuple
         model = Comment
         fields = ('body',)

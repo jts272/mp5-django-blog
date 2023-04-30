@@ -43,6 +43,51 @@ class PostDetail(View):
             {
                 'post': post,
                 'comments': comments,
+                'commented': False,
+                'liked': liked,
+                # Add our CommentForm to the context to render
+                # Will be rendered in the post_detail template
+                'comment_form': CommentForm()
+            }
+        )
+
+        # Post method - as in HTTP post method when user adds a comment
+        # This is a copy of the `get` method with adjustments
+    def post(self, request, slug, *args, **kwargs):
+        queryset = Post.objects.filter(status=1)
+        post = get_object_or_404(queryset, slug=slug)
+        comments = post.comments.filter(approved=True).order_by('created_on')
+        liked = False
+        if post.likes.filter(id=self.request.user.id).exists():
+            liked = True
+
+        # Get the data from our form
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            comment_form.instance.email = request.user.email
+            comment_form.instance.name = request.user.username
+            # Get the comment, but don't commit to the db yet
+            comment = comment_form.save(commit=False)
+            # Assign a post to the comment, so we know which post the
+            # comment has been left on
+            comment.post = post
+            comment.save()
+        else:
+            # Return empty comment form instance
+            comment_form = CommentForm()
+
+        return render(
+            request,
+            'post_detail.html',
+            # Context object
+            {
+                'post': post,
+                'comments': comments,
+                # Add a commented value and set it to True
+                # This will be used to notify users their comment is
+                # awaiting approval in `post_detail.html``
+                # Corresponding False value added to `get` method
+                'commented': True,
                 'liked': liked,
                 # Add our CommentForm to the context to render
                 # Will be rendered in the post_detail template
