@@ -1,6 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+# Look up a URL by the name we give it in `urls.py`
+from django.shortcuts import render, get_object_or_404, reverse
 # import generic library for generic class-based views
 from django.views import generic, View
+# Reload the post_detail template when liking/unliking
+from django.http import HttpResponseRedirect
 # Our models that our views are based on
 from .models import Post
 # Import our CommentForm class
@@ -94,3 +97,18 @@ class PostDetail(View):
                 'comment_form': CommentForm()
             }
         )
+
+
+class PostLike(View):
+    def post(self, request, slug):
+        # Get the relevant post
+        post = get_object_or_404(Post, slug=slug)
+
+        if post.likes.filter(id=request.user.id).exists():
+            post.likes.remove(request.user)
+        else:
+            # We are adding the logged in user to the list of likes
+            post.likes.add(request.user)
+
+        # Reload the page on like/unlike
+        return HttpResponseRedirect(reverse('post_detail', args=[slug]))
