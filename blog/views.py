@@ -8,6 +8,8 @@ from django.http import HttpResponseRedirect
 from .models import Post
 # Import our CommentForm class
 from .forms import CommentForm
+# Add custom messages
+from django.contrib import messages
 
 # Create your views here.
 
@@ -75,6 +77,7 @@ class PostDetail(View):
             # comment has been left on
             comment.post = post
             comment.save()
+            messages.add_message(request, messages.SUCCESS, 'Comment sent!')
         else:
             # Return empty comment form instance
             comment_form = CommentForm()
